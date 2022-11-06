@@ -1,0 +1,36 @@
+[21-Jun-2022 10:00:10 Asia/Kuwait] PHP Fatal error:  During inheritance of ArrayAccess: Uncaught ErrorException: Return type of Illuminate\Support\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/Collection.php:1277
+Stack trace:
+#0 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/Collection.php(11): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError()
+#1 /home/lselwx25ef8j/public_html/vendor/composer/ClassLoader.php(476): include('/home/lselwx25e...')
+#2 /home/lselwx25ef8j/public_html/vendor/composer/ClassLoader.php(344): Composer\Autoload\includeFile()
+#3 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/helpers.php(109): Composer\Autoload\ClassLoader->loadClass()
+#4 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(130): collect()
+#5 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(106): Illuminate\Foundation\PackageManifest->build()
+#6 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(89): Illuminate\Foundation\PackageManifest->getManifest()
+#7 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(78): Illuminate\Foundation\PackageManifest->config()
+#8 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\Foundation\PackageManifest->aliases()
+#9 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(219): Illuminate\Foundation\Bootstrap\RegisterFacades->bootstrap()
+#10 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(156): Illuminate\Foundation\Application->bootstrapWith()
+#11 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(140): Illuminate\Foundation\Http\Kernel->bootstrap()
+#12 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(110): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#13 /home/lselwx25ef8j/public_html/public/index.php(55): Illuminate\Foundation\Http\Kernel->handle()
+#14 /home/lselwx25ef8j/public_html/server.php(21): require_once('/home/lselwx25e...')
+#15 {main} in /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 11
+[21-Jun-2022 10:00:32 Asia/Kuwait] PHP Fatal error:  During inheritance of ArrayAccess: Uncaught ErrorException: Return type of Illuminate\Support\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/Collection.php:1277
+Stack trace:
+#0 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/Collection.php(11): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError()
+#1 /home/lselwx25ef8j/public_html/vendor/composer/ClassLoader.php(476): include('/home/lselwx25e...')
+#2 /home/lselwx25ef8j/public_html/vendor/composer/ClassLoader.php(344): Composer\Autoload\includeFile()
+#3 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/helpers.php(109): Composer\Autoload\ClassLoader->loadClass()
+#4 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(130): collect()
+#5 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(106): Illuminate\Foundation\PackageManifest->build()
+#6 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(89): Illuminate\Foundation\PackageManifest->getManifest()
+#7 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(78): Illuminate\Foundation\PackageManifest->config()
+#8 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\Foundation\PackageManifest->aliases()
+#9 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(219): Illuminate\Foundation\Bootstrap\RegisterFacades->bootstrap()
+#10 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(156): Illuminate\Foundation\Application->bootstrapWith()
+#11 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(140): Illuminate\Foundation\Http\Kernel->bootstrap()
+#12 /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(110): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#13 /home/lselwx25ef8j/public_html/public/index.php(55): Illuminate\Foundation\Http\Kernel->handle()
+#14 /home/lselwx25ef8j/public_html/server.php(21): require_once('/home/lselwx25e...')
+#15 {main} in /home/lselwx25ef8j/public_html/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 11
