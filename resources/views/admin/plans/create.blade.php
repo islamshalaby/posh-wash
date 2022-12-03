@@ -82,7 +82,6 @@
                         <th class="text-center blue-color">{{ __('messages.plane_name') }}</th>
                         <th class="text-center blue-color">{{ __('messages.plan_price') }}</th>
                         <th class="text-center blue-color">{{ __('messages.view') }}</th>
-                        <th class="text-center blue-color">{{ __('messages.working_days') }}</th>
                         <th class="text-center blue-color">{{ __('messages.details') }}</th>
                         @if(Auth::user()->update_data)
                             <th class="text-center">{{ __('messages.edit') }}</th>
@@ -107,10 +106,6 @@
                                         <span class="lever switch-col-indigo"></span>
                                     </label>
                                 </div>
-                            </td>
-                            <td class="text-center blue-color">
-                                <a href="{{ route('plans.working_days', $plan->id) }}" class="btn btn-primary"><i
-                                    class="far fa-eye"></i></a>
                             </td>
                             <td class="text-center blue-color"><a href="{{ route('plans.details', $plan->id) }}"><i
                                         class="far fa-eye"></i></a></td>
@@ -156,3 +151,26 @@
         });
     </script>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+        function update_status(el) {
+            if (el.checked) {
+                var status = 'show';
+            } else {
+                var status = 'hide';
+            }
+            console.log(el)
+            $.post('{{ route('plans.showed') }}', {
+                _token: '{{ csrf_token() }}',
+                id: el.value,
+                status: status
+            }, function (data) {
+                if (data == 1) {
+                    toastr.success("{{ __('messages.status_changed') }}");
+                } else {
+                    toastr.error("{{trans('admin.status_not_changed')}}");
+                }
+            });
+        }
+    </script>
+@endpush

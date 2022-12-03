@@ -11,7 +11,7 @@ use JD\Cloudder\Facades\Cloudder;
 
 class ForumController extends AdminController
 {
-    /**ContactNumberumber
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class OrderTime extends Model
 {
     protected $guarded = [];
-    protected $dates = ['order_date'];
 
     public function Detail()
     {
@@ -15,6 +14,6 @@ class OrderTime extends Model
     }
     public function Time_details()
     {
-        return $this->belongsTo('App\DayTime', 'time_id')->withTrashed();
+        return $this->belongsTo('App\DayTime', 'time_id');
     }
 }

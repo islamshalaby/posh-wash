@@ -84,7 +84,7 @@
                 @endif
                 @if(in_array(19 , Auth::user()->custom['admin_permission']))
                     <li class="menu job_times">
-                        <a href="{{route('job_times.create')}}" class="dropdown-toggle first-link">
+                        <a href="{{route('job_times.index')}}" class="dropdown-toggle first-link">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                                 <span>{{ __('messages.times_of_work') }}</span>
@@ -134,31 +134,6 @@
                         </ul>
                     </li>
                 @endif
-                @if(in_array(5 , Auth::user()->custom['admin_permission']))
-                    <li class="menu contact_us">
-                        <a href="/admin-panel/contact_us" class="dropdown-toggle first-link">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round" class="feather feather-inbox">
-                                    <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
-                                    <path
-                                        d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
-                                </svg>
-                                <span>{{ __('messages.contact_us') }}
-                                    @if( Auth::user()->custom['contact_us_count'] > 0 )
-                                        <span class="unreadcount">
-                                            <span class="insidecount">
-                                                <?=Auth::user()->custom['contact_us_count']?>
-                                            </span>
-                                      </span>
-                                    @endif
-                                 </span>
-                            </div>
-                        </a>
-                    </li>
-                @endif
-
                 @if(in_array(20 , Auth::user()->custom['admin_permission']))
                 <li class="menu contact_numbers">
                     <a href="/admin-panel/contact_numbers" class="dropdown-toggle first-link">

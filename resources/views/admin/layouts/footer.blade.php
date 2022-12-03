@@ -30,15 +30,8 @@
 <script src="/admin/assets/js/dashboard/dash_1.js"></script>
 <script src="/admin/assets/js/dashboard/dash_2.js"></script>
 <script src="/admin/plugins/file-upload/file-upload-with-preview.min.js"></script>
-<script src="/admin/plugins/table/datatable/datatables.js"></script>
-<!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
-<script src="/admin/plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
-<script src="/admin/plugins/table/datatable/button-ext/jszip.min.js"></script>
-<script src="/admin/plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
-<script src="/admin/plugins/table/datatable/button-ext/buttons.print.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
-<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
+<script src="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
 {{--to generat toaster--}}
 <script src="/admin/plugins/toast-master/js/jquery.toast.js"></script>
 <script src="/admin/plugins/toastr/toastr.js"></script>
@@ -47,6 +40,45 @@
     CKEDITOR.replace('editor-ck-en');
     CKEDITOR.replace('editor-ck-ar');
 </script>
+<script>
+    $(function () {
+        $("#map_url").on("change paste keyup", function () {
+            var url = $(this).val();
+            var regex = new RegExp('@(.*),(.*),');
+            var lon_lat_match = url.match(regex);
+            var lon = lon_lat_match[2];
+            var lat = lon_lat_match[1];
+            $('input[name=longitude]').val(lon);
+            $('input[name=latitude]').val(lat);
+        });
+    });
+</script>
+<script>
+    var firstUpload = new FileUploadWithPreview('myFirstImage')
+    var secondUpload = new FileUploadWithPreview('mySecondImage')
+</script>
+<script>
+    $(".menu a").removeAttr("data-active");
+    $(".menu a").attr("aria-expanded", "false");
+    $(".menu ul").removeClass("show");
+    $(".menu ul li").removeClass("active");
+    var pathname = window.location.pathname;
+    var pathnameArray = pathname.split("/");
+    var currentSection = pathnameArray[2];
+    $("." + currentSection + " .first-link").attr("data-active", "true");
+    $("." + currentSection + " .first-link").attr("aria-expanded", "true");
+    $("." + currentSection + " ul").addClass("show");
+    $("." + currentSection + " ." + pathnameArray[3]).addClass("active")
+</script>
+{{--------------------------- accordation in settings page -------------------------}}
+<script src="/admin/assets/js/scrollspyNav.js"></script>
+<script src="/admin/assets/js/components/ui-accordions.js"></script>
+{{----------------------------------------end -------------------------------------------}}
+<script src="/admin/plugins/table/datatable/datatables.js"></script>
+<script src="/admin/plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
+<script src="/admin/plugins/table/datatable/button-ext/jszip.min.js"></script>
+<script src="/admin/plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
+<script src="/admin/plugins/table/datatable/button-ext/buttons.print.min.js"></script>
 <script>
     $('#html5-extension').DataTable({
         buttons: {
@@ -93,40 +125,6 @@
         "pageLength": 20
     });
 </script>
-<script>
-    $(function () {
-        $("#map_url").on("change paste keyup", function () {
-            var url = $(this).val();
-            var regex = new RegExp('@(.*),(.*),');
-            var lon_lat_match = url.match(regex);
-            var lon = lon_lat_match[2];
-            var lat = lon_lat_match[1];
-            $('input[name=longitude]').val(lon);
-            $('input[name=latitude]').val(lat);
-        });
-    });
-</script>
-<script>
-    var firstUpload = new FileUploadWithPreview('myFirstImage')
-    var secondUpload = new FileUploadWithPreview('mySecondImage')
-</script>
-<script>
-    $(".menu a").removeAttr("data-active");
-    $(".menu a").attr("aria-expanded", "false");
-    $(".menu ul").removeClass("show");
-    $(".menu ul li").removeClass("active");
-    var pathname = window.location.pathname;
-    var pathnameArray = pathname.split("/");
-    var currentSection = pathnameArray[2];
-    $("." + currentSection + " .first-link").attr("data-active", "true");
-    $("." + currentSection + " .first-link").attr("aria-expanded", "true");
-    $("." + currentSection + " ul").addClass("show");
-    $("." + currentSection + " ." + pathnameArray[3]).addClass("active")
-</script>
-{{--------------------------- accordation in settings page -------------------------}}
-<script src="/admin/assets/js/scrollspyNav.js"></script>
-<script src="/admin/assets/js/components/ui-accordions.js"></script>
-{{----------------------------------------end -------------------------------------------}}
 @stack('scripts')
 @yield('scripts')
 

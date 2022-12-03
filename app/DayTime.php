@@ -22,10 +22,10 @@ class DayTime extends Model
 
 
     public function OrderTimes() {
-        return $this->hasMany('App\OrderTime', 'time_id')->where('order_times.start', 1);
+        return $this->hasMany('App\OrderTime', 'time_id');
     }
 
     public function OrderTimes2($date) {
-        return $this->hasMany('App\OrderTime', 'time_id')->where('order_times.start', 1)->whereDate('order_date', $date)->where('status', 'done')->count();
+        return $this->hasMany('App\OrderTime', 'time_id')->whereDate('order_date', $date)->where('status', 'done')->count();
     }
 }

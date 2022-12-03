@@ -64,7 +64,7 @@
             </div>
         </div>
 @endsection
-@section('scripts')
+@push('scripts')
     <script type="text/javascript">
         function update_status(el){
             if(el.checked){
@@ -81,6 +81,6 @@
             });
         }
     </script>
-@endsection
+@endpush
 
 

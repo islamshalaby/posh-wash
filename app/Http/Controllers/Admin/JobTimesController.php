@@ -7,8 +7,6 @@ use App\TimesOfWork;
 use Illuminate\Http\Request;
 use App\City;
 use App\Area;
-use App\Category;
-use App\Plan;
 
 class JobTimesController extends AdminController
 {
@@ -27,7 +25,7 @@ class JobTimesController extends AdminController
 
     public function show($id)
     {
-        $data = DayTime::where('day',$id)->get();
+        $data = DayTime::where('day',$id)->orderBy('id', 'desc')->get();
         return view('admin.job_times.day_details', compact('data'));
     }
 
@@ -43,45 +41,16 @@ class JobTimesController extends AdminController
         return back();
     }
 
-    public function create()
-    {
-        $categories = Category::where('deleted', '0')->get();
-        $sunday_data = TimesOfWork::where('day', 0)->first();
-        $monday_data = TimesOfWork::where('day', 1)->first();
-        $tuesday_data = TimesOfWork::where('day', 2)->first();
-        $wednesday_data = TimesOfWork::where('day', 3)->first();
-        $thursday_data = TimesOfWork::where('day', 4)->first();
-        $friday_data = TimesOfWork::where('day', 5)->first();
-        $saturday_data = TimesOfWork::where('day', 6)->first();
-        return view('admin.job_times.create', compact('sunday_data', 'monday_data', 'tuesday_data', 'wednesday_data'
-            , 'thursday_data', 'friday_data', 'saturday_data', 'categories'));
-    }
-
-    // get plans by category
-    public function get_plans_by_category(Request $request)
-    {
-        $data = Plan::where('cat_id', $request->cat_id)->where('deleted', '0')->get();
-        // return ajax response
-        return response()->json($data);
-    }
-
 
     public function store(Request $request)
     {
-        $data = $this->validate(\request(),
-            [
-                'category_id' => 'required',
-                'plan_id' => 'required',
-            ]);
-        TimesOfWork::truncate();
-        DayTime::where('plan_id', $request->plan_id)->delete();
+        TimesOfWork::getQuery()->delete();
+        DayTime::getQuery()->delete();
 
         if ($request->sunday_work) {
             if (count($request->sunday_from) > 0) {
                 for ($i = 0; $i < count($request->sunday_from); $i++) {
                     $workTime = [];
-                    var_dump($request->sunday_from[$i]);
-                    var_dump($request->sunday_to[$i]);
                     $sunday['day'] = 0;
                     $sunday['holiday'] = 0;
                     $sunday['from'] = $request->sunday_from[$i];
@@ -100,7 +69,6 @@ class JobTimesController extends AdminController
                         $day_data['time_from'] = $time;
                         $time_to = date('H:i:s', strtotime($time . '+1 hour'));
                         $day_data['time_to'] = $time_to;
-                        $day_data['plan_id'] = $request->plan_id;
                         DayTime::create($day_data);
                         $time = date('H:i:s', strtotime($time . '+1 hour'));
                     }
@@ -134,7 +102,6 @@ class JobTimesController extends AdminController
                         $day_data['time_from'] = $time;
                         $time_to = date('H:i:s', strtotime($time . '+1 hour'));
                         $day_data['time_to'] = $time_to;
-                        $day_data['plan_id'] = $request->plan_id;
                         DayTime::create($day_data);
                         $time = date('H:i:s', strtotime($time . '+1 hour'));
                     }
@@ -168,7 +135,6 @@ class JobTimesController extends AdminController
                         $day_data['time_from'] = $time;
                         $time_to = date('H:i:s', strtotime($time . '+1 hour'));
                         $day_data['time_to'] = $time_to;
-                        $day_data['plan_id'] = $request->plan_id;
                         DayTime::create($day_data);
                         $time = date('H:i:s', strtotime($time . '+1 hour'));
                     }
@@ -202,7 +168,6 @@ class JobTimesController extends AdminController
                         $day_data['time_from'] = $time;
                         $time_to = date('H:i:s', strtotime($time . '+1 hour'));
                         $day_data['time_to'] = $time_to;
-                        $day_data['plan_id'] = $request->plan_id;
                         DayTime::create($day_data);
                         $time = date('H:i:s', strtotime($time . '+1 hour'));
                     }
@@ -236,7 +201,6 @@ class JobTimesController extends AdminController
                         $day_data['time_from'] = $time;
                         $time_to = date('H:i:s', strtotime($time . '+1 hour'));
                         $day_data['time_to'] = $time_to;
-                        $day_data['plan_id'] = $request->plan_id;
                         DayTime::create($day_data);
                         $time = date('H:i:s', strtotime($time . '+1 hour'));
                     }
@@ -270,7 +234,6 @@ class JobTimesController extends AdminController
                         $day_data['time_from'] = $time;
                         $time_to = date('H:i:s', strtotime($time . '+1 hour'));
                         $day_data['time_to'] = $time_to;
-                        $day_data['plan_id'] = $request->plan_id;
                         DayTime::create($day_data);
                         $time = date('H:i:s', strtotime($time . '+1 hour'));
                     }
@@ -304,7 +267,6 @@ class JobTimesController extends AdminController
                         $day_data['time_from'] = $time;
                         $time_to = date('H:i:s', strtotime($time . '+1 hour'));
                         $day_data['time_to'] = $time_to;
-                        $day_data['plan_id'] = $request->plan_id;
                         DayTime::create($day_data);
                         $time = date('H:i:s', strtotime($time . '+1 hour'));
                     }

@@ -87,9 +87,7 @@ Route::group(['middleware'=>'language','prefix' => "admin-panel",'namespace' => 
         Route::get('fetchproducts/{userId}' , 'Ads\AdController@fetch_products')->name("products.fetch");
     });
     Route::resource('payments' , 'PaymentsController');
-    Route::get('job_times/plans' , 'JobTimesController@get_plans_by_category')->name('job_times.plans');
     Route::resource('job_times' , 'JobTimesController');
-    
     Route::resource('orders' , 'OrderController');
     Route::resource('contact_numbers' , 'ContactNumberController');
     Route::get('orders/change_status/{id}/{status}' , 'OrderController@change_status')->name('orders.change_status');
@@ -245,10 +243,6 @@ Route::group(['middleware'=>'language','prefix' => "admin-panel",'namespace' => 
     });
 
     // Plans Routes
-    Route::get('plans/working-days/{id}' , 'PlanController@show_plan_day_times')->name("plans.working_days");
-    Route::get('plans/day-hours/{plan_id}/{day}' , 'PlanController@show_day_hours_by_day_and_plan_id')->name("plans.day_hours");
-    // update usage number
-    Route::put('plans/update-usage-number' , 'PlanController@update_usage_number')->name("plans.update_usage_number");
     Route::resource('plans', 'PlanController');
     Route::get('show_div/{type}', 'PlanController@show_div');
 

@@ -81,7 +81,7 @@
         </div>
     </div>
 @endsection
-@section('scripts')
+@push('scripts')
     <script type="text/javascript">
         function update_status(el) {
             if (el.checked) {
@@ -89,6 +89,7 @@
             } else {
                 var status = 'hide';
             }
+            console.log(el)
             $.post('{{ route('plans.showed') }}', {
                 _token: '{{ csrf_token() }}',
                 id: el.value,
@@ -102,5 +103,5 @@
             });
         }
     </script>
-@endsection
+@endpush
 

@@ -330,15 +330,7 @@
                     "contact_numbers" => "Contact Numbers",
                     "show_contact_numbers" => "Show Contact Numbers",
                     "add_new_contact_number" => "Add New Contact Number",
-                    "days_of_week" => "Days Of Week",
-                    "work_start_time" => "Work Start Time",
-                    "work_end_time" => "Work End Time",
-                    "working_hours" => "Working Hours",
-                    "working_days" => "Working Days",
-                    "change_working_times" => "Change Working Times",
-                    "hour" => "Hour",
-                    "number_of_times_order" => "Number Of Times Order", 
-                    "update_number_of_times_order" => "Update Number Of Times Order",
+                    "rejected" => "Rejected"
 
     ];
 ?>

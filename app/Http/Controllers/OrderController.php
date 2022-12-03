@@ -39,31 +39,25 @@ class OrderController extends Controller
         }
 
         $day = date('w', strtotime($request->selected_date));
-        
         $data['plan_info'] = Plan::findOrFail($request->plan_id);
-        // $setting = Setting::find(1);
+        $setting = Setting::find(1);
+        $cars_service_num = $setting->cars_service_num;
 
-        $available_times = DayTime::where('plan_id', $request->plan_id)->where('day', $day)->select('id', 'time_from', 'time_to', 'work_time', 'usage_number')
+        $data['available_times'] = DayTime::where('day', $day)->select('id', 'time_from', 'time_to', 'work_time')
             ->get()
-            ->makeHidden(['OrderTimes']);
-
-        $data['available_times'] = [];
-
-        for ($i = 0; $i < count($available_times); $i++) {
-            
-            if (($available_times[$i]->OrderTimes2($request->selected_date) < $available_times[$i]->usage_number)) {
-                $data['available_times'][] = $available_times[$i];
-            }
-        }
-
-
-        for ($n = 0; $n < count($data['available_times']); $n++) {
-            // var_dump($data['available_times'][$n]->time_to);
-            // var_dump($data['available_times'][$n + 1]->time_from);
-            if ($n + 1 < count($data['available_times']) && trim($data['available_times'][$n]->time_to) != trim($data['available_times'][$n + 1]->time_from)) {
-                array_splice($data['available_times'], $n +1, $data['plan_info']->work_hours - 1);
-            }
-        }
+            ->map(function ($data) use ($cars_service_num, $request) {
+                if ($data->work_time == 1) {
+                    if (($data->OrderTimes2($request->selected_date) < $cars_service_num)) {
+                        $data->available = true;
+                    }else {
+                        $data->available = false;
+                    }
+                }else {
+                    $data->available = false;
+                }
+                
+                return $data;
+            })->makeHidden(['OrderTimes']);
 
         $response = APIHelpers::createApiResponse(false, 200, '', '', $data, $request->lang);
         return response()->json($response, 200);
@@ -91,21 +85,6 @@ class OrderController extends Controller
                 $response = APIHelpers::createApiResponse(true, 406, 'تم حظر حسابك', 'تم حظر حسابك', null, $request->lang);
                 return response()->json($response, 406);
             }
-            $day = date('w', strtotime($request->order_date));
-            $plan = Plan::where('id', $request->plan_id)->select('work_hours')->first();
-            $plan_day_times = DayTime::where('plan_id', $request->plan_id)->where('day', $day)->where('id', '>=', $request->selected_times[0])->take($plan->work_hours)->get();
-            if (count($plan_day_times) != $plan->work_hours) {
-                $response = APIHelpers::createApiResponse(true, 406, 'This time is not available for this plan', 'هذا الموعد غير متاح لهذه الباقة', null, $request->lang);
-                return response()->json($response, 406);
-            }
-            // loop on plan day times and check if number order times is less than usage number
-            foreach ($plan_day_times as $plan_day_time) {
-                if ($plan_day_time->OrderTimes2($request->order_date) >= $plan_day_time->usage_number) {
-                    $response = APIHelpers::createApiResponse(true, 406, 'This time is not available for this plan', 'هذا الموعد غير متاح لهذه الباقة', null, $request->lang);
-                    return response()->json($response, 406);
-                }
-            }
-            // dd($plan_day_times);
             $input['user_id'] = $user->id;
             unset($data['selected_times']);
             $input['order_date'] = $request->order_date;
@@ -114,19 +93,11 @@ class OrderController extends Controller
             $input['plan_id'] = $request->plan_id;
             $input['address_id'] = $request->address_id;
             $order_details = OrderDetail::create($input);
-            
-            //loop on plan day times
-            $i = 0;
-            foreach ($plan_day_times as $plan_day_time) {
-                $order_time['order_details_id'] = $order_details->id;
-                $order_time['time_id'] = $plan_day_time->id;
-                $order_time['start'] = 0;
-                $order_time['order_date'] = \Carbon\Carbon::parse($request->order_date)->timestamp;
-                if ($i == 0) {
-                    $order_time['start'] = 1;
-                }
-                OrderTime::create($order_time);
-                $i ++;
+            foreach ($request->selected_times as $row) {
+                $times_data['time_id'] = $row;
+                $times_data['order_details_id'] = $order_details->id;
+                $times_data['order_date'] = $request->order_date;
+                OrderTime::create($times_data);
             }
             $response = APIHelpers::createApiResponse(false, 200, '', '', $data, $request->lang);
             return response()->json($response, 200);
@@ -202,12 +173,20 @@ class OrderController extends Controller
                 $response = APIHelpers::createApiResponse(true, 406, 'تم حظر حسابك', 'تم حظر حسابك', null, $request->lang);
                 return response()->json($response, 406);
             }
+            $setting = Setting::where('id', 1)->select("cars_service_num")->first();
+            $cars_service_num = $setting->cars_service_num;
             $input['user_id'] = $user->id;
             $order_details = OrderDetail::where('user_id', $user->id)->where('order_id', null)->get();
-            
             if (count($order_details) > 0) {
                 $total = 0;
                 foreach ($order_details as $row) {
+                    foreach ($row->Times as $time) {
+                        $busyDayTimes = OrderTime::where('time_id', $time->time_id)->where('order_date', $time->order_date)->where('status', 'done')->get();
+                        if (count($busyDayTimes) >= $cars_service_num ){
+                            $response = APIHelpers::createApiResponse(true, 406, 'this time is not available', 'هذا الوقت غير متاح', null, $request->lang);
+                            return response()->json($response, 406);
+                        }
+                    }
                     $total = $total + $row->Plan->price;
                 }
                 $root_url = $request->root();
@@ -230,14 +209,12 @@ class OrderController extends Controller
         if ($request->result == 'CAPTURED') {
             $input['user_id'] = $request->udf1;
             $order_details = OrderDetail::where('user_id', $input['user_id'])->where('order_id', null)->get();
-
             if (count($order_details) > 0) {
                 $input['total'] = $request->udf2;
                 // loop on order details
                 for($i = 0; $i < count($order_details); $i ++) {
                     $order_details[$i]->Times()->update(['order_times.status' => 'done']);
                 }
-                
                 $order = Order::create($input);
                 if ($order) {
                     OrderDetail::where('user_id', $input['user_id'])->where('order_id', null)->update(['order_id' => $order->id]);

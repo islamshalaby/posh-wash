@@ -92,7 +92,7 @@
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                     <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
                                         <input data-day="monday"
-                                               @if($sunday_data) @if($monday_data->holiday == 0 && $monday_data) checked
+                                               @if($sunday_data) @if(isset($monday_data->holiday) && $monday_data->holiday == 0 && $monday_data) checked
                                                @endif @endif  class="day_work" name="monday_work" type="checkbox">
                                         <span class="slider round"></span>
                                     </label>

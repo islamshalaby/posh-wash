@@ -363,14 +363,6 @@ return [
     "contact_numbers" => "أرقام التواصل",
     "show_contact_numbers" => "عرض أرقام التواصل",
     "add_new_contact_number" => "إضافة رقم جديد",
-    "days_of_week" => "أيام الأسبوع",
-    "work_start_time" => "وقت بداية العمل",
-    "work_end_time" => "وقت نهاية العمل",
-    "working_hours" => "ساعات العمل",
-    "working_days" => "أيام العمل",
-    "change_working_times" => "تغيير أوقات العمل",
-    "hour" => "ساعة",
-    "number_of_times_order" => "عدد مرات الطلب",
-    "update_number_of_times_order" => "تعديل عدد مرات الطلب",
+    "rejected" => "تم الرفض",
 ];
 ?>

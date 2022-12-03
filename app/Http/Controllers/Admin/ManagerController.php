@@ -81,21 +81,21 @@ class ManagerController extends AdminController{
             return redirect('/admin-panel/managers/edit/'.$request->id)->with('status' , 'Email Exists Before');
         }
 
-        if(empty($request->permission)){
-            return redirect('admin-panel/managers/edit/'.$request->id)->with('status', 'You must add at least one permission');
-        }
+        // if(empty($request->permission)){
+        //     return redirect('admin-panel/managers/edit/'.$request->id)->with('status', 'You must add at least one permission');
+        // }
 
-        $admin_permissions = AdminPermission::where('admin_id' , $request->id)->delete();
+        // $admin_permissions = AdminPermission::where('admin_id' , $request->id)->delete();
 
-        $permissions = $request->permission;
-        $manager_id = $request->id;
+        // $permissions = $request->permission;
+        // $manager_id = $request->id;
 
-        for($i = 0; $i < count($permissions) ; $i++){
-            $admin_permission = new AdminPermission();
-            $admin_permission->admin_id = $manager_id;
-            $admin_permission->permission_id = $permissions[$i];
-            $admin_permission->save();
-        }
+        // for($i = 0; $i < count($permissions) ; $i++){
+        //     $admin_permission = new AdminPermission();
+        //     $admin_permission->admin_id = $manager_id;
+        //     $admin_permission->permission_id = $permissions[$i];
+        //     $admin_permission->save();
+        // }
 
         $current_manager = Admin::find($request->id);
         $current_manager->name = $request->name;
@@ -104,9 +104,9 @@ class ManagerController extends AdminController{
             $current_manager->password = Hash::make($request->password);
         }
 
-        $current_manager->add_data = $request->add_data || 0;
-        $current_manager->update_data = $request->update_data || 0;
-        $current_manager->delete_data = $request->delete_data || 0;
+        // $current_manager->add_data = $request->add_data || 0;
+        // $current_manager->update_data = $request->update_data || 0;
+        // $current_manager->delete_data = $request->delete_data || 0;
 
         $current_manager->save();
         return redirect('/admin-panel/managers/show');

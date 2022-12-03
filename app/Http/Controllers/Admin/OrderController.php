@@ -16,10 +16,19 @@ class OrderController extends AdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Order::OrderBy('id','desc')->get();
-        return view('admin.orders.index', compact('data'));
+        $data = Order::OrderBy('id','desc');
+        if ($request->order_status) {
+            $data = $data->where('status',$request->order_status);
+        }
+        if ($request->from && $request->to) {
+            $data = $data->whereBetween('created_at',[$request->from,$request->to]);
+        }
+        $data = $data->get();
+        $sum_total = $data->sum('total');
+        // dd(count($data));
+        return view('admin.orders.index', compact('data', 'sum_total'));
     }
 
     /**
